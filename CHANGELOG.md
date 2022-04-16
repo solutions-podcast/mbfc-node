@@ -1,3 +1,19 @@
+# v0.0.2 (Sat Apr 16 2022)
+
+#### ⚠️ Pushed to `main`
+
+- Delete test.ts ([@FOSSforlife](https://github.com/FOSSforlife))
+- Fix github action to use yarn ([@FOSSforlife](https://github.com/FOSSforlife))
+- Add readme ([@FOSSforlife](https://github.com/FOSSforlife))
+- getByUrl ([@FOSSforlife](https://github.com/FOSSforlife))
+- Copy from youtube-album-search ([@FOSSforlife](https://github.com/FOSSforlife))
+
+#### Authors: 1
+
+- Elias Jackson ([@FOSSforlife](https://github.com/FOSSforlife))
+
+---
+
 # v0.0.4 (Thu Oct 07 2021)
 
 #### ⚠️ Pushed to `main`
