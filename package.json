@@ -20,11 +20,16 @@
 	},
 	"homepage": "https://github.com/FOSSforlife/youtube-album-search#readme",
 	"devDependencies": {
+		"@types/jest": "^27.4.1",
 		"@types/node": "^14.11.2",
 		"@typescript-eslint/eslint-plugin": "^4.32.0",
 		"auto": "^10.32.1",
+		"jest": "^27.5.1",
+		"ts-jest": "^27.1.4",
 		"ts-node": "^10.2.1",
 		"typescript": "^4.4.3"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"phin": "^3.6.1"
+	}
 }

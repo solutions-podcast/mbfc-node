@@ -1,85 +1,51 @@
-// https://raw.githubusercontent.com/drmikecrowe/mbfcext/71f548eade5f13b148485be66eaa01c073e0f95c/docs/v3/combined.json
+import p from 'phin';
+import { Bias, BiasShort, CredibilityShort, MBFCData, Reporting, ReportingShort, Result, Source } from './interfaces';
 
-import { aliases, biases, sources } from './mbfc-data.json';
-
-type BiasShort = 'L' | 'LC' | 'C' | 'RC' | 'R' | 'PS' | 'CP' | 'S' | 'FN';
-type CredibilityShort = 'L' | 'M' | 'H' | 'NA';
-type ReportingShort = 'VH' | 'H' | 'MF' | 'M' | 'L' | 'VL';
-
-const reportingScale = {
-	VH: 'Very High',
-	H: 'High',
-	MF: 'Mostly Factual',
-	M: 'Mixed',
-	L: 'Low',
-	VL: 'Very Low',
+const biasInfo = (mbfcData: MBFCData): Record<BiasShort, Bias> => {
+	const { biases } = mbfcData;
+	return {
+		L: biases['left'],
+		LC: biases['left-center'],
+		C: biases['center'],
+		RC: biases['right-center'],
+		R: biases['right'],
+		PS: biases['pro-science'],
+		CP: biases['conspiracy'],
+		S: biases['satire'],
+		FN: biases['fake-news'],
+	};
 };
 
-// const biasScale = {
-//   L: 'Left Bias',
-//   LC: 'Left-Center Bias',
-//   C: 'Least Biased (Center)',
-//   RC: 'Right-Center Bias',
-//   R: 'Right Bias',
-//   PS: 'Pro-Science',
-//   CP: 'Conspiracy-Pseudoscience',
-//   S: 'Satire',
-//   FN: 'Questionable Sources',
-// };
-
-const biasInfo: Record<BiasShort, Bias> = {
-	L: biases['left'],
-	LC: biases['left-center'],
-	C: biases['center'],
-	RC: biases['right-center'],
-	R: biases['right'],
-	PS: biases['pro-science'],
-	CP: biases['conspiracy'],
-	S: biases['satire'],
-	FN: biases['fake-news'],
+const reportingInfo = (mbfcData: MBFCData): Record<ReportingShort, Reporting> => {
+	const { reporting } = mbfcData;
+	return {
+		VH: reporting['VERY HIGH'],
+		H: reporting['HIGH'],
+		MF: reporting['MOSTLY FACTUAL'],
+		M: reporting['MIXED'],
+		L: reporting['LOW'],
+		VL: reporting['VERY LOW'],
+	};
 };
 
-interface Alias {}
-
-interface Bias {
-	name: string;
-	description: string;
-	url: string;
-	pretty: string;
-}
-
-interface Source {
-	b: BiasShort;
-	d: string;
-	f: string;
-	n: string;
-	u: string;
-	P: number;
-	r: ReportingShort;
-	c: CredibilityShort;
-	a: string;
-}
-
-export const formatSource = (source: Source) => ({
+const formatSource = (source: Source, mbfcData: MBFCData): Result => ({
 	name: source.n,
-	factualReporting: reportingScale[source.r],
+	factualReporting: reportingInfo(mbfcData)[source.r].pretty,
+	bias: biasInfo(mbfcData)[source.b].name,
+	url: source.u,
+	credibility: mbfcData.credibility[source.c],
 });
 
-export function getByUrl(input) {
-	// TODO: handle aliases
+const fetchData = async () => {
+	const mbfcDataUrl = 'https://raw.githubusercontent.com/drmikecrowe/mbfcext/main/docs/v3/combined.json';
+	const mbfcDataResponse = await p({ url: mbfcDataUrl, parse: 'json' });
+	return mbfcDataResponse.body as MBFCData;
+};
 
-	if (!input) {
-		throw 'No input given';
-	}
+export function getByUrl(input: string, mbfcData: MBFCData): Result {
+	const { sources } = mbfcData;
 
 	input = input.toLowerCase().trim();
-
-	for (let [alias, entryUrl] of Object.entries(aliases)) {
-		if (input.indexOf(alias) !== -1) {
-			input = entryUrl;
-		}
-	}
-
 	const mbfcEntry = Object.values(sources).find((entry) => {
 		return (
 			entry.d === input ||
@@ -96,8 +62,10 @@ export function getByUrl(input) {
 			String(entry.u).replace('-', ' ') === input
 		);
 	});
-	if (mbfcEntry !== undefined) {
-		return mbfcEntry;
+
+	if (mbfcEntry) {
+		return formatSource(mbfcEntry, mbfcData);
+	} else {
+		throw new Error(`No MBFC entry found for ${input}`);
 	}
-	throw 'No MBFC result found';
 }

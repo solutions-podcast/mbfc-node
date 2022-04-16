@@ -1,5 +1,15 @@
 // // TODO: Delete this file once we have actual tests
 
+import { getByUrl } from '.';
+
+describe('getByUrl', () => {
+	it('should do something', () => {
+		const url = 'https://www.vox.com/23022693/war-ukraine-shipping-food-hunger';
+		const result = getByUrl(url);
+		console.log(result);
+	});
+});
+
 // import { google } from 'googleapis';
 // import { albumSearch } from '.';
 // import dotenv from 'dotenv';
