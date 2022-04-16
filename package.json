@@ -1,6 +1,6 @@
 {
-	"name": "youtube-album-search",
-	"version": "0.0.4",
+	"name": "mbfc-node",
+	"version": "0.0.1",
 	"description": "",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -10,15 +10,15 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/FOSSforlife/youtube-album-search.git"
+		"url": "git+https://github.com/solutions-podcast/mbfc-node.git"
 	},
 	"keywords": [],
 	"author": "Elias Jackson <ejthedj0@gmail.com>",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/FOSSforlife/youtube-album-search/issues"
+		"url": "https://github.com/solutions-podcast/mbfc-node/issues"
 	},
-	"homepage": "https://github.com/FOSSforlife/youtube-album-search#readme",
+	"homepage": "https://github.com/solutions-podcast/mbfc-node#readme",
 	"devDependencies": {
 		"@types/jest": "^27.4.1",
 		"@types/node": "^14.11.2",
