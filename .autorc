@@ -1,0 +1,31 @@
+{
+		"plugins": [
+			"npm"
+		],
+		"labels": [
+			{
+				"name": "enhancement",
+				"changelogTitle": "🚀 Enhancement",
+				"description": "Increment the minor version when merged",
+				"releaseType": "minor",
+				"color": "#F1A60E",
+				"overwrite": true
+			},
+			{
+				"name": "bug",
+				"changelogTitle": "🐛 Bug Fix",
+				"description": "Increment the patch version when merged",
+				"releaseType": "patch",
+				"color": "#870048",
+				"overwrite": true
+			},
+			{
+				"name": "enhancement",
+				"changelogTitle": "🏎 Performance",
+				"description": "Improve performance of an existing feature",
+				"releaseType": "patch",
+				"color": "#f4b2d8",
+				"overwrite": true
+			}
+		]
+	}
